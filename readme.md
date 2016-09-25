@@ -78,4 +78,4 @@ Accepts an object of environment variables, like `process.env`, and modifies the
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)

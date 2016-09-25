@@ -1,18 +1,16 @@
 'use strict';
-var path = require('path');
-var pathKey = require('path-key');
-var objectAssign = require('object-assign');
+const path = require('path');
+const pathKey = require('path-key');
 
-module.exports = function (opts) {
-	opts = objectAssign({
+module.exports = opts => {
+	opts = Object.assign({
 		cwd: process.cwd(),
 		path: process.env[pathKey()]
 	}, opts);
 
-	var prev;
-	var pth = path.resolve(opts.cwd);
-
-	var ret = [];
+	let prev;
+	let pth = path.resolve(opts.cwd);
+	const ret = [];
 
 	while (prev !== pth) {
 		ret.push(path.join(pth, 'node_modules/.bin'));
@@ -26,13 +24,13 @@ module.exports = function (opts) {
 	return ret.concat(opts.path).join(path.delimiter);
 };
 
-module.exports.env = function (opts) {
-	opts = objectAssign({
-		env: objectAssign({}, process.env)
+module.exports.env = opts => {
+	opts = Object.assign({
+		env: Object.assign({}, process.env)
 	}, opts);
 
-	var path = pathKey();
-	var env = opts.env;
+	const path = pathKey();
+	const env = opts.env;
 
 	opts.path = env[path];
 	env[path] = module.exports(opts);

@@ -10,7 +10,7 @@
     "url": "sindresorhus.com"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4"
   },
   "scripts": {
     "test": "xo && ava"
@@ -33,11 +33,13 @@
     "executable"
   ],
   "dependencies": {
-    "object-assign": "^4.1.0",
-    "path-key": "^1.0.0"
+    "path-key": "^2.0.0"
   },
   "devDependencies": {
     "ava": "*",
     "xo": "*"
+  },
+  "xo": {
+    "esnext": true
   }
 }
