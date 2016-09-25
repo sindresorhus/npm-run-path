@@ -33,6 +33,7 @@
     "executable"
   ],
   "dependencies": {
+    "object-assign": "^4.1.0",
     "path-key": "^1.0.0"
   },
   "devDependencies": {
