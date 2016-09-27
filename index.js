@@ -29,8 +29,8 @@ module.exports.env = opts => {
 		env: Object.assign({}, process.env)
 	}, opts);
 
-	const path = pathKey();
 	const env = opts.env;
+	const path = pathKey({env});
 
 	opts.path = env[path];
 	env[path] = module.exports(opts);
