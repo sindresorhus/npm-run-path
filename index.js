@@ -26,10 +26,10 @@ module.exports = opts => {
 
 module.exports.env = opts => {
 	opts = Object.assign({
-		env: Object.assign({}, process.env)
+		env: process.env
 	}, opts);
 
-	const env = opts.env;
+	const env = Object.assign({}, opts.env);
 	const path = pathKey({env});
 
 	opts.path = env[path];
