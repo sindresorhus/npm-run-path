@@ -19,7 +19,11 @@ module.exports = opts => {
 	}
 
 	// ensure the running `node` binary is used
-	ret.push(path.dirname(process.execPath));
+	const binNodePth = path.dirname(process.execPath)
+	const testExisting = new RegExp(`:${binNodePth}:`)
+	if(!testExisting.test(opts.path)) {
+		ret.push(binNodePth);
+	}
 
 	return ret.concat(opts.path).join(path.delimiter);
 };
