@@ -35,6 +35,8 @@ childProcess.execFileSync('foo', {
 
 ### npmRunPath([options])
 
+Returns the augmented path string.
+
 #### options
 
 ##### cwd
@@ -53,6 +55,8 @@ PATH to be appended.<br>
 Set it to an empty string to exclude the default PATH.
 
 ### npmRunPath.env([options])
+
+The augmented [`process.env`](https://nodejs.org/api/process.html#process_process_env) object.
 
 #### options
 
