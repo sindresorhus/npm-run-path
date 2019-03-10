@@ -34,7 +34,7 @@
 		"executable"
 	],
 	"dependencies": {
-		"path-key": "^2.0.0"
+		"path-key": "^3.0.0"
 	},
 	"devDependencies": {
 		"ava": "^1.3.1",

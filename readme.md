@@ -8,7 +8,7 @@ In [npm run scripts](https://docs.npmjs.com/cli/run-script) you can execute loca
 ## Install
 
 ```
-$ npm install --save npm-run-path
+$ npm install npm-run-path
 ```
 
 
@@ -56,9 +56,11 @@ Set it to an empty string to exclude the default PATH.
 
 ### npmRunPath.env([options])
 
-The augmented [`process.env`](https://nodejs.org/api/process.html#process_process_env) object.
+Returns the augmented [`process.env`](https://nodejs.org/api/process.html#process_process_env) object.
 
 #### options
+
+Type: `Object`
 
 ##### cwd
 
