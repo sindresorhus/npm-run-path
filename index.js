@@ -19,10 +19,18 @@ const npmRunPath = options => {
 		cwdPath = path.resolve(cwdPath, '..');
 	}
 
-	// Ensure the running `node` binary is used
-	result.push(path.dirname(process.execPath));
+	const execDir = getExecDir(options);
 
-	return result.concat(options.path).join(path.delimiter);
+	return result.concat(execDir).concat(options.path).join(path.delimiter);
+};
+
+// Ensure the running `node` binary is used.
+// Noop if the directory is already in `PATH`
+const getExecDir = function (options) {
+	const execDir = path.dirname(process.execPath);
+	return options.path.split(path.delimiter).some(inputPath => inputPath === execDir) ?
+		[] :
+		[execDir];
 };
 
 module.exports = npmRunPath;
