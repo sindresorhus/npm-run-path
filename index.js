@@ -21,7 +21,7 @@ const npmRunPath = options => {
 
 	const execDir = getExecDir(options);
 
-	return result.concat(execDir).concat(options.path).join(path.delimiter);
+	return result.concat(execDir, options.path).join(path.delimiter);
 };
 
 // Ensure the running `node` binary is used.
