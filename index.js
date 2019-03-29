@@ -27,8 +27,8 @@ const npmRunPath = options => {
 // Ensure the running `node` binary is used.
 // Noop if the directory is already in `PATH`
 const getExecDir = function (options) {
-	const execDir = path.dirname(process.execPath);
-	return options.path.split(path.delimiter).some(inputPath => inputPath === execDir) ?
+	const execDir = path.normalize(path.dirname(process.execPath));
+	return options.path.split(path.delimiter).some(inputPath => path.normalize(inputPath) === execDir) ?
 		[] :
 		[execDir];
 };

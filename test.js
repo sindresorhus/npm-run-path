@@ -20,3 +20,10 @@ test('does not repeat execPath directory', t => {
 	const execDirs = result.split(path.delimiter).filter(resultPath => resultPath === execDir);
 	t.is(execDirs.length, 1);
 });
+
+test('does not repeat execPath directory even when using a different form', t => {
+	const execDir = `${path.dirname(process.execPath)}/.`;
+	const result = npmRunPath({path: execDir});
+	const execDirs = result.split(path.delimiter).filter(resultPath => path.normalize(resultPath) === path.normalize(execDir));
+	t.is(execDirs.length, 1);
+});
