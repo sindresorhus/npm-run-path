@@ -1,5 +1,6 @@
-import {expectType} from 'tsd-check';
-import npmRunPath, {ProcessEnv} from '.';
+import {expectType} from 'tsd';
+import npmRunPath = require('.');
+import {ProcessEnv} from '.';
 
 expectType<string>(npmRunPath());
 expectType<string>(npmRunPath({cwd: '/foo'}));

@@ -26,6 +26,7 @@ const npmRunPath = options => {
 };
 
 module.exports = npmRunPath;
+// TODO: Remove this for the next major release
 module.exports.default = npmRunPath;
 
 module.exports.env = options => {
