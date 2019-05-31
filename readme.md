@@ -33,11 +33,13 @@ childProcess.execFileSync('foo', {
 
 ## API
 
-### npmRunPath([options])
+### npmRunPath(options?)
 
 Returns the augmented path string.
 
 #### options
+
+Type: `object`
 
 ##### cwd
 
@@ -54,13 +56,13 @@ Default: [`PATH`](https://github.com/sindresorhus/path-key)
 PATH to be appended.<br>
 Set it to an empty string to exclude the default PATH.
 
-### npmRunPath.env([options])
+### npmRunPath.env(options?)
 
 Returns the augmented [`process.env`](https://nodejs.org/api/process.html#process_process_env) object.
 
 #### options
 
-Type: `Object`
+Type: `object`
 
 ##### cwd
 
@@ -82,6 +84,14 @@ Accepts an object of environment variables, like `process.env`, and modifies the
 - [execa](https://github.com/sindresorhus/execa) - Execute a locally installed binary
 
 
-## License
+---
 
-MIT © [Sindre Sorhus](https://sindresorhus.com)
+<div align="center">
+	<b>
+		<a href="https://tidelift.com/subscription/pkg/npm-npm-run-path?utm_source=npm-npm-run-path&utm_medium=referral&utm_campaign=readme">Get professional support for this package with a Tidelift subscription</a>
+	</b>
+	<br>
+	<sub>
+		Tidelift helps make open source sustainable for maintainers while giving companies<br>assurances about security, maintenance, and licensing for their dependencies.
+	</sub>
+</div>
