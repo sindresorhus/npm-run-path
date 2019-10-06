@@ -20,7 +20,7 @@ const npmRunPath = options => {
 	}
 
 	// Ensure the running `node` binary is used
-	result.push(path.dirname(process.execPath));
+	result.unshift(path.dirname(process.execPath));
 
 	return result.concat(options.path).join(path.delimiter);
 };
