@@ -13,6 +13,13 @@ declare namespace npmRunPath {
 		Set it to an empty string to exclude the default PATH.
 		*/
 		readonly path?: string;
+
+		/**
+		Path to the current Node.js executable. Its directory is pushed to the front of PATH.
+
+		@default process.execPath
+		*/
+		readonly execPath?: string;
 	}
 
 	interface ProcessEnv {
@@ -31,6 +38,13 @@ declare namespace npmRunPath {
 		Accepts an object of environment variables, like `process.env`, and modifies the PATH using the correct [PATH key](https://github.com/sindresorhus/path-key). Use this if you're modifying the PATH for use in the `child_process` options.
 		*/
 		readonly env?: ProcessEnv;
+
+		/**
+		Path to the current Node.js executable. Its directory is pushed to the front of PATH.
+
+		@default process.execPath
+		*/
+		readonly execPath?: string;
 	}
 }
 
