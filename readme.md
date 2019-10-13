@@ -89,7 +89,9 @@ Accepts an object of environment variables, like `process.env`, and modifies the
 Type: `string`<br>
 Default: `process.execPath`
 
-Path to the current Node.js executable. Its directory is pushed to the front of PATH.
+Path to the Node.js executable to use in child processes if that is different from the current one. Its directory is pushed to the front of PATH.
+
+This can be either an absolute path or a path relative to the [`cwd` option](#cwd).
 
 
 ## Related
