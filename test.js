@@ -21,14 +21,14 @@ test('push `execPath` to the front of the PATH', t => {
 	);
 });
 
-test('Can change execPath with the execPath option', t => {
+test('can change `execPath` with the `execPath` option', t => {
 	t.is(
 		npmRunPath({path: '', execPath: 'test/test'}).split(path.delimiter)[0],
 		path.resolve(process.cwd(), 'test')
 	);
 });
 
-test('The execPath option is relative to the cwd option', t => {
+test('the `execPath` option is relative to the `cwd` option', t => {
 	t.is(
 		npmRunPath({path: '', execPath: 'test/test', cwd: '/dir'}).split(path.delimiter)[0],
 		path.normalize('/dir/test')
