@@ -14,7 +14,7 @@ test('main', t => {
 	);
 });
 
-test('Push execPath to the front of the PATH', t => {
+test('push `execPath` to the front of the PATH', t => {
 	t.is(
 		npmRunPath({path: ''}).split(path.delimiter)[0],
 		path.dirname(process.execPath)
