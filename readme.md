@@ -56,6 +56,15 @@ Default: [`PATH`](https://github.com/sindresorhus/path-key)
 PATH to be appended.<br>
 Set it to an empty string to exclude the default PATH.
 
+##### execPath
+
+Type: `string`<br>
+Default: `process.execPath`
+
+Path to the current Node.js executable. Its directory is pushed to the front of PATH.
+
+This can be either an absolute path or a path relative to the [`cwd` option](#cwd).
+
 ### npmRunPath.env(options?)
 
 Returns the augmented [`process.env`](https://nodejs.org/api/process.html#process_process_env) object.
@@ -76,6 +85,15 @@ Working directory.
 Type: `Object`
 
 Accepts an object of environment variables, like `process.env`, and modifies the PATH using the correct [PATH key](https://github.com/sindresorhus/path-key). Use this if you're modifying the PATH for use in the `child_process` options.
+
+##### execPath
+
+Type: `string`<br>
+Default: `process.execPath`
+
+Path to the Node.js executable to use in child processes if that is different from the current one. Its directory is pushed to the front of PATH.
+
+This can be either an absolute path or a path relative to the [`cwd` option](#cwd).
 
 
 ## Related
