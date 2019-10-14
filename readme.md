@@ -63,6 +63,8 @@ Default: `process.execPath`
 
 Path to the current Node.js executable. Its directory is pushed to the front of PATH.
 
+This can be either an absolute path or a path relative to the `cwd` option.
+
 ### npmRunPath.env(options?)
 
 Returns the augmented [`process.env`](https://nodejs.org/api/process.html#process_process_env) object.
