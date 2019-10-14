@@ -44,6 +44,8 @@ declare namespace npmRunPath {
 		/**
 		Path to the current Node.js executable. Its directory is pushed to the front of PATH.
 
+		This can be either an absolute path or a path relative to the `cwd` option.
+
 		@default process.execPath
 		*/
 		readonly execPath?: string;
