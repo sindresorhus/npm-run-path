@@ -1,6 +1,6 @@
 {
 	"name": "npm-run-path",
-	"version": "4.0.0",
+	"version": "4.0.1",
 	"description": "Get your PATH prepended with locally installed binaries",
 	"license": "MIT",
 	"repository": "sindresorhus/npm-run-path",
