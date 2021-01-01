@@ -1,4 +1,4 @@
-# npm-run-path [![Build Status](https://travis-ci.org/sindresorhus/npm-run-path.svg?branch=master)](https://travis-ci.org/sindresorhus/npm-run-path)
+# npm-run-path
 
 > Get your [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) prepended with locally installed binaries
 
