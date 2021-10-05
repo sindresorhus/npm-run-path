@@ -1,16 +1,20 @@
-import path from 'path';
+import process from 'node:process';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import test from 'ava';
-import npmRunPath from '.';
+import {npmRunPath, npmRunPathEnv} from './index.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test('main', t => {
 	t.is(
 		npmRunPath({path: ''}).split(path.delimiter)[0],
-		path.join(__dirname, 'node_modules/.bin')
+		path.join(__dirname, 'node_modules/.bin'),
 	);
 
 	t.is(
-		npmRunPath.env({env: {PATH: 'foo'}}).PATH.split(path.delimiter)[0],
-		path.join(__dirname, 'node_modules/.bin')
+		npmRunPathEnv({env: {PATH: 'foo'}}).PATH.split(path.delimiter)[0],
+		path.join(__dirname, 'node_modules/.bin'),
 	);
 });
 
@@ -21,7 +25,7 @@ test('push `execPath` later in the PATH', t => {
 
 test('can change `execPath` with the `execPath` option', t => {
 	const pathEnv = npmRunPath({path: '', execPath: 'test/test'}).split(
-		path.delimiter
+		path.delimiter,
 	);
 	t.is(pathEnv[pathEnv.length - 2], path.resolve(process.cwd(), 'test'));
 });
@@ -30,7 +34,7 @@ test('the `execPath` option is relative to the `cwd` option', t => {
 	const pathEnv = npmRunPath({
 		path: '',
 		execPath: 'test/test',
-		cwd: '/dir'
+		cwd: '/dir',
 	}).split(path.delimiter);
 	t.is(pathEnv[pathEnv.length - 2], path.normalize('/dir/test'));
 });
