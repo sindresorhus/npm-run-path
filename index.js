@@ -2,7 +2,7 @@ import process from 'node:process';
 import path from 'node:path';
 import pathKey from 'path-key';
 
-export function npmRunPath(options) {
+export function npmRunPath(options = {}) {
 	const {
 		cwd = process.cwd(),
 		path: path_ = process.env[pathKey()],
