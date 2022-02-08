@@ -4,7 +4,7 @@ export interface RunPathOptions {
 
 	@default process.cwd()
 	*/
-	readonly cwd?: string;
+	readonly cwd?: string | URL;
 
 	/**
 	PATH to be appended. Default: [`PATH`](https://github.com/sindresorhus/path-key).
@@ -31,7 +31,7 @@ export interface EnvOptions {
 
 	@default process.cwd()
 	*/
-	readonly cwd?: string;
+	readonly cwd?: string | URL;
 
 	/**
 	Accepts an object of environment variables, like `process.env`, and modifies the PATH using the correct [PATH key](https://github.com/sindresorhus/path-key). Use this if you're modifying the PATH for use in the `child_process` options.

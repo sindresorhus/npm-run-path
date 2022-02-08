@@ -40,7 +40,7 @@ Type: `object`
 
 ##### cwd
 
-Type: `string`\
+Type: `string | URL`\
 Default: `process.cwd()`
 
 The working directory.
@@ -73,7 +73,7 @@ Type: `object`
 
 ##### cwd
 
-Type: `string`\
+Type: `string | URL`\
 Default: `process.cwd()`
 
 The working directory.

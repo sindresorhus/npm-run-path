@@ -18,6 +18,20 @@ test('main', t => {
 	);
 });
 
+test('the `cwd` option changes the current directory', t => {
+	t.is(
+		npmRunPath({path: '', cwd: '/dir'}).split(path.delimiter)[0],
+		path.normalize('/dir/node_modules/.bin'),
+	);
+});
+
+test('the `cwd` option can be a file URL', t => {
+	t.is(
+		npmRunPath({path: '', cwd: new URL('file:///dir')}).split(path.delimiter)[0],
+		path.normalize('/dir/node_modules/.bin'),
+	);
+});
+
 test('push `execPath` later in the PATH', t => {
 	const pathEnv = npmRunPath({path: ''}).split(path.delimiter);
 	t.is(pathEnv[pathEnv.length - 2], path.dirname(process.execPath));

@@ -1,5 +1,6 @@
 import process from 'node:process';
 import path from 'node:path';
+import url from 'node:url';
 import pathKey from 'path-key';
 
 export function npmRunPath(options = {}) {
@@ -10,7 +11,8 @@ export function npmRunPath(options = {}) {
 	} = options;
 
 	let previous;
-	let cwdPath = path.resolve(cwd);
+	const cwdString = cwd instanceof URL ? url.fileURLToPath(cwd) : cwd;
+	let cwdPath = path.resolve(cwdString);
 	const result = [];
 
 	while (previous !== cwdPath) {
@@ -20,7 +22,7 @@ export function npmRunPath(options = {}) {
 	}
 
 	// Ensure the running `node` binary is used.
-	result.push(path.resolve(cwd, execPath, '..'));
+	result.push(path.resolve(cwdString, execPath, '..'));
 
 	return [...result, path_].join(path.delimiter);
 }
