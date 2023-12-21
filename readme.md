@@ -97,15 +97,3 @@ This can be either an absolute path or a path relative to the [`cwd` option](#cw
 
 - [npm-run-path-cli](https://github.com/sindresorhus/npm-run-path-cli) - CLI for this module
 - [execa](https://github.com/sindresorhus/execa) - Execute a locally installed binary
-
----
-
-<div align="center">
-	<b>
-		<a href="https://tidelift.com/subscription/pkg/npm-npm-run-path?utm_source=npm-npm-run-path&utm_medium=referral&utm_campaign=readme">Get professional support for this package with a Tidelift subscription</a>
-	</b>
-	<br>
-	<sub>
-		Tidelift helps make open source sustainable for maintainers while giving companies<br>assurances about security, maintenance, and licensing for their dependencies.
-	</sub>
-</div>
