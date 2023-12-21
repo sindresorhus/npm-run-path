@@ -59,4 +59,3 @@ test('the `execPath` option is relative to the `cwd` option', t => {
 	}).split(path.delimiter);
 	t.is(pathEnv[pathEnv.length - 2], path.normalize('/dir/test'));
 });
-
