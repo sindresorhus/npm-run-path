@@ -1,6 +1,6 @@
 import process from 'node:process';
 import path from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath, pathToFileURL} from 'node:url';
 import test from 'ava';
 import {npmRunPath, npmRunPathEnv} from './index.js';
 
@@ -44,6 +44,13 @@ test('can change `execPath` with the `execPath` option', t => {
 	t.is(pathEnv[pathEnv.length - 2], path.resolve(process.cwd(), 'test'));
 });
 
+test('the `execPath` option can be a file URL', t => {
+	const pathEnv = npmRunPath({path: '', execPath: pathToFileURL('test/test')}).split(
+		path.delimiter,
+	);
+	t.is(pathEnv[pathEnv.length - 2], path.resolve(process.cwd(), 'test'));
+});
+
 test('the `execPath` option is relative to the `cwd` option', t => {
 	const pathEnv = npmRunPath({
 		path: '',
@@ -52,3 +59,4 @@ test('the `execPath` option is relative to the `cwd` option', t => {
 	}).split(path.delimiter);
 	t.is(pathEnv[pathEnv.length - 2], path.normalize('/dir/test'));
 });
+

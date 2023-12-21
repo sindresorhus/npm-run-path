@@ -11,6 +11,7 @@ export function npmRunPath(options = {}) {
 	} = options;
 
 	let previous;
+	const execPathString = execPath instanceof URL ? url.fileURLToPath(execPath) : execPath;
 	const cwdString = cwd instanceof URL ? url.fileURLToPath(cwd) : cwd;
 	let cwdPath = path.resolve(cwdString);
 	const result = [];
@@ -22,7 +23,7 @@ export function npmRunPath(options = {}) {
 	}
 
 	// Ensure the running `node` binary is used.
-	result.push(path.resolve(cwdString, execPath, '..'));
+	result.push(path.resolve(cwdString, execPathString, '..'));
 
 	return [...result, path_].join(path.delimiter);
 }
