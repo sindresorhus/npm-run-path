@@ -20,7 +20,7 @@ export interface RunPathOptions {
 
 	@default process.execPath
 	*/
-	readonly execPath?: string;
+	readonly execPath?: string | URL;
 }
 
 export type ProcessEnv = Record<string, string | undefined>;
@@ -45,7 +45,7 @@ export interface EnvOptions {
 
 	@default process.execPath
 	*/
-	readonly execPath?: string;
+	readonly execPath?: string | URL;
 }
 
 /**

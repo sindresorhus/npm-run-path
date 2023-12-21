@@ -7,9 +7,11 @@ expectType<string>(npmRunPath({cwd: '/foo'}));
 expectType<string>(npmRunPath({cwd: new URL('file:///foo')}));
 expectType<string>(npmRunPath({path: '/usr/local/bin'}));
 expectType<string>(npmRunPath({execPath: '/usr/local/bin'}));
+expectType<string>(npmRunPath({execPath: new URL('file:///usr/local/bin')}));
 
 expectType<ProcessEnv>(npmRunPathEnv());
 expectType<ProcessEnv>(npmRunPathEnv({cwd: '/foo'}));
 expectType<ProcessEnv>(npmRunPathEnv({cwd: new URL('file:///foo')}));
 expectType<ProcessEnv>(npmRunPathEnv({env: process.env})); // eslint-disable-line @typescript-eslint/no-unsafe-assignment
 expectType<ProcessEnv>(npmRunPathEnv({execPath: '/usr/local/bin'}));
+expectType<ProcessEnv>(npmRunPathEnv({execPath: new URL('file:///usr/local/bin')}));

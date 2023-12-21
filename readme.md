@@ -56,7 +56,7 @@ Set it to an empty string to exclude the default PATH.
 
 ##### execPath
 
-Type: `string`\
+Type: `string | URL`\
 Default: `process.execPath`
 
 The path to the current Node.js executable. Its directory is pushed to the front of PATH.
