@@ -32,20 +32,53 @@ childProcess.execFileSync('foo', {
 
 ### npmRunPath(options?)
 
+`options`: [`Options`](#options)\
+_Returns_: `string`
+
 Returns the augmented PATH string.
 
-#### options
+### npmRunPathEnv(options?)
+
+`options`: [`Options`](#options)\
+_Returns_: `object`
+
+Returns the augmented [`process.env`](https://nodejs.org/api/process.html#process_process_env) object.
+
+### options
 
 Type: `object`
 
-##### cwd
+#### cwd
 
 Type: `string | URL`\
 Default: `process.cwd()`
 
 The working directory.
 
-##### path
+#### execPath
+
+Type: `string | URL`\
+Default: [`process.execPath`](https://nodejs.org/api/process.html#processexecpath)
+
+The path to the current Node.js executable.
+
+This can be either an absolute path or a path relative to the [`cwd` option](#cwd).
+
+#### addExecPath
+
+Type: `boolean`\
+Default: `true`
+
+Whether to push the current Node.js executable's directory ([`execPath`](#execpath) option) to the front of PATH.
+
+#### preferLocal
+
+Type: `boolean`\
+Default: `true`
+
+Whether to push the locally installed binaries' directory to the front of PATH.
+
+#### path
 
 Type: `string`\
 Default: [`PATH`](https://github.com/sindresorhus/path-key)
@@ -54,44 +87,16 @@ The PATH to be appended.
 
 Set it to an empty string to exclude the default PATH.
 
-##### execPath
+Only available with [`npmRunPath()`](#npmrunpathoptions), not [`npmRunPathEnv()`](#npmrunpathenvoptions).
 
-Type: `string | URL`\
-Default: `process.execPath`
+#### env
 
-The path to the current Node.js executable. Its directory is pushed to the front of PATH.
-
-This can be either an absolute path or a path relative to the [`cwd` option](#cwd).
-
-### npmRunPathEnv(options?)
-
-Returns the augmented [`process.env`](https://nodejs.org/api/process.html#process_process_env) object.
-
-#### options
-
-Type: `object`
-
-##### cwd
-
-Type: `string | URL`\
-Default: `process.cwd()`
-
-The working directory.
-
-##### env
-
-Type: `object`
+Type: `object`\
+Default: [`process.env`](https://nodejs.org/api/process.html#processenv)
 
 Accepts an object of environment variables, like `process.env`, and modifies the PATH using the correct [PATH key](https://github.com/sindresorhus/path-key). Use this if you're modifying the PATH for use in the `child_process` options.
 
-##### execPath
-
-Type: `string`\
-Default: `process.execPath`
-
-The path to the Node.js executable to use in child processes if that is different from the current one. Its directory is pushed to the front of PATH.
-
-This can be either an absolute path or a path relative to the [`cwd` option](#cwd).
+Only available with [`npmRunPathEnv()`](#npmrunpathenvoptions), not [`npmRunPath()`](#npmrunpathoptions).
 
 ## Related
 
