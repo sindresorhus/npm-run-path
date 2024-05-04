@@ -1,6 +1,6 @@
 import process from 'node:process';
 import {expectType, expectError} from 'tsd';
-import {npmRunPath, npmRunPathEnv, ProcessEnv} from './index.js';
+import {npmRunPath, npmRunPathEnv, type ProcessEnv} from './index.js';
 
 const fileUrl = new URL('file:///foo');
 
