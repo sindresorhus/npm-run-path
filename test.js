@@ -6,29 +6,29 @@ import {npmRunPath, npmRunPathEnv} from './index.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const testLocalDir = (t, addExecPath, preferLocal, expectedResult) => {
+const testLocalDirectory = (t, addExecPath, preferLocal, expectedResult) => {
 	t.is(
 		npmRunPath({path: '', addExecPath, preferLocal}).split(path.delimiter)[0] === path.join(__dirname, 'node_modules/.bin'),
 		expectedResult,
 	);
 };
 
-test('Adds node_modules/.bin - npmRunPath()', testLocalDir, undefined, undefined, true);
-test('"addExecPath: false" still adds node_modules/.bin - npmRunPath()', testLocalDir, false, undefined, true);
-test('"preferLocal: false" does not add node_modules/.bin - npmRunPath()', testLocalDir, undefined, false, false);
-test('"preferLocal: false", "addExecPath: false" does not add node_modules/.bin - npmRunPath()', testLocalDir, false, false, false);
+test('Adds node_modules/.bin - npmRunPath()', testLocalDirectory, undefined, undefined, true);
+test('"addExecPath: false" still adds node_modules/.bin - npmRunPath()', testLocalDirectory, false, undefined, true);
+test('"preferLocal: false" does not add node_modules/.bin - npmRunPath()', testLocalDirectory, undefined, false, false);
+test('"preferLocal: false", "addExecPath: false" does not add node_modules/.bin - npmRunPath()', testLocalDirectory, false, false, false);
 
-const testLocalDirEnv = (t, addExecPath, preferLocal, expectedResult) => {
+const testLocalDirectoryEnv = (t, addExecPath, preferLocal, expectedResult) => {
 	t.is(
 		npmRunPathEnv({env: {PATH: 'foo'}, addExecPath, preferLocal}).PATH.split(path.delimiter)[0] === path.join(__dirname, 'node_modules/.bin'),
 		expectedResult,
 	);
 };
 
-test('Adds node_modules/.bin - npmRunPathEnv()', testLocalDirEnv, undefined, undefined, true);
-test('"addExecPath: false" still adds node_modules/.bin - npmRunPathEnv()', testLocalDirEnv, false, undefined, true);
-test('"preferLocal: false" does not add node_modules/.bin - npmRunPathEnv()', testLocalDirEnv, undefined, false, false);
-test('"preferLocal: false", "addExecPath: false" does not add node_modules/.bin - npmRunPathEnv()', testLocalDirEnv, false, false, false);
+test('Adds node_modules/.bin - npmRunPathEnv()', testLocalDirectoryEnv, undefined, undefined, true);
+test('"addExecPath: false" still adds node_modules/.bin - npmRunPathEnv()', testLocalDirectoryEnv, false, undefined, true);
+test('"preferLocal: false" does not add node_modules/.bin - npmRunPathEnv()', testLocalDirectoryEnv, undefined, false, false);
+test('"preferLocal: false", "addExecPath: false" does not add node_modules/.bin - npmRunPathEnv()', testLocalDirectoryEnv, false, false, false);
 
 test('the `cwd` option changes the current directory', t => {
 	t.is(
@@ -46,12 +46,17 @@ test('the `cwd` option can be a file URL', t => {
 
 test('push `execPath` later in the PATH', t => {
 	const pathEnv = npmRunPath({path: ''}).split(path.delimiter);
-	t.is(pathEnv[pathEnv.length - 2], path.dirname(process.execPath));
+	t.is(pathEnv.at(-2), path.dirname(process.execPath));
 });
 
 const testExecPath = (t, preferLocal, addExecPath, expectedResult) => {
-	const pathEnv = npmRunPath({path: '', execPath: 'test/test', preferLocal, addExecPath}).split(path.delimiter);
-	t.is(pathEnv[pathEnv.length - 2] === path.resolve('test'), expectedResult);
+	const pathEnv = npmRunPath({
+		path: '',
+		execPath: 'test/test',
+		preferLocal,
+		addExecPath,
+	}).split(path.delimiter);
+	t.is(pathEnv.at(-2) === path.resolve('test'), expectedResult);
 };
 
 test('can change `execPath` with the `execPath` option - npmRunPath()', testExecPath, undefined, undefined, true);
@@ -60,8 +65,13 @@ test('"addExecPath: false" does not add execPath - npmRunPath()', testExecPath, 
 test('"addExecPath: false", "preferLocal: false" does not add execPath - npmRunPath()', testExecPath, false, false, false);
 
 const testExecPathEnv = (t, preferLocal, addExecPath, expectedResult) => {
-	const pathEnv = npmRunPathEnv({env: {PATH: 'foo'}, execPath: 'test/test', preferLocal, addExecPath}).PATH.split(path.delimiter);
-	t.is(pathEnv[pathEnv.length - 2] === path.resolve('test'), expectedResult);
+	const pathEnv = npmRunPathEnv({
+		env: {PATH: 'foo'},
+		execPath: 'test/test',
+		preferLocal,
+		addExecPath,
+	}).PATH.split(path.delimiter);
+	t.is(pathEnv.at(-2) === path.resolve('test'), expectedResult);
 };
 
 test('can change `execPath` with the `execPath` option - npmRunPathEnv()', testExecPathEnv, undefined, undefined, true);
@@ -71,7 +81,7 @@ test('"addExecPath: false", "preferLocal: false" does not add execPath - npmRunP
 
 test('the `execPath` option can be a file URL', t => {
 	const pathEnv = npmRunPath({path: '', execPath: pathToFileURL('test/test')}).split(path.delimiter);
-	t.is(pathEnv[pathEnv.length - 2], path.resolve('test'));
+	t.is(pathEnv.at(-2), path.resolve('test'));
 });
 
 test('the `execPath` option is relative to the `cwd` option', t => {
@@ -80,5 +90,5 @@ test('the `execPath` option is relative to the `cwd` option', t => {
 		execPath: 'test/test',
 		cwd: '/dir',
 	}).split(path.delimiter);
-	t.is(pathEnv[pathEnv.length - 2], path.normalize('/dir/test'));
+	t.is(pathEnv.at(-2), path.normalize('/dir/test'));
 });
