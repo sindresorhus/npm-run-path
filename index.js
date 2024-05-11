@@ -1,7 +1,7 @@
 import process from 'node:process';
 import path from 'node:path';
-import {fileURLToPath} from 'node:url';
 import pathKey from 'path-key';
+import {toPath, traversePathUp} from 'unicorn-magic';
 
 export const npmRunPath = ({
 	cwd = process.cwd(),
@@ -10,8 +10,7 @@ export const npmRunPath = ({
 	execPath = process.execPath,
 	addExecPath = true,
 } = {}) => {
-	const cwdString = cwd instanceof URL ? fileURLToPath(cwd) : cwd;
-	const cwdPath = path.resolve(cwdString);
+	const cwdPath = path.resolve(toPath(cwd));
 	const result = [];
 
 	if (preferLocal) {
@@ -26,19 +25,14 @@ export const npmRunPath = ({
 };
 
 const applyPreferLocal = (result, cwdPath) => {
-	let previous;
-
-	while (previous !== cwdPath) {
-		result.push(path.join(cwdPath, 'node_modules/.bin'));
-		previous = cwdPath;
-		cwdPath = path.resolve(cwdPath, '..');
+	for (const directory of traversePathUp(cwdPath)) {
+		result.push(path.join(directory, 'node_modules/.bin'));
 	}
 };
 
 // Ensure the running `node` binary is used
 const applyExecPath = (result, execPath, cwdPath) => {
-	const execPathString = execPath instanceof URL ? fileURLToPath(execPath) : execPath;
-	result.push(path.resolve(cwdPath, execPathString, '..'));
+	result.push(path.resolve(cwdPath, toPath(execPath), '..'));
 };
 
 export const npmRunPathEnv = ({env = process.env, ...options} = {}) => {
