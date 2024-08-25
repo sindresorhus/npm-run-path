@@ -55,7 +55,7 @@ test('the `cwd` option can be a file URL', t => {
 
 test('push `execPath` later in the PATH', t => {
 	const pathEnv = npmRunPath({path: ''}).split(path.delimiter);
-	t.is(pathEnv.at(-2), path.dirname(process.execPath));
+	t.is(pathEnv.at(-1), path.dirname(process.execPath));
 });
 
 test('`execPath` is not added twice', t => {
@@ -74,7 +74,7 @@ const testExecPath = (t, preferLocal, addExecPath, expectedResult) => {
 		preferLocal,
 		addExecPath,
 	}).split(path.delimiter);
-	t.is(pathEnv.at(-2) === path.resolve('test'), expectedResult);
+	t.is(pathEnv.at(-1) === path.resolve('test'), expectedResult);
 };
 
 test('can change `execPath` with the `execPath` option - npmRunPath()', testExecPath, undefined, undefined, true);
@@ -99,7 +99,7 @@ test('"addExecPath: false", "preferLocal: false" does not add execPath - npmRunP
 
 test('the `execPath` option can be a file URL', t => {
 	const pathEnv = npmRunPath({path: '', execPath: pathToFileURL('test/test')}).split(path.delimiter);
-	t.is(pathEnv.at(-2), path.resolve('test'));
+	t.is(pathEnv.at(-1), path.resolve('test'));
 });
 
 test('the `execPath` option is relative to the `cwd` option', t => {
@@ -108,5 +108,22 @@ test('the `execPath` option is relative to the `cwd` option', t => {
 		execPath: 'test/test',
 		cwd: './dir',
 	}).split(path.delimiter);
-	t.is(pathEnv.at(-2), path.resolve('./dir/test'));
+	t.is(pathEnv.at(-1), path.resolve('./dir/test'));
 });
+
+test('the PATH can remain empty', t => {
+	t.is(npmRunPath({path: '', preferLocal: false, addExecPath: false}), '');
+});
+
+const testEmptyPath = (t, pathValue, shouldEndWithDelimiter, hasTwoDelimiters) => {
+	const pathEnv = npmRunPath({path: pathValue});
+	t.not(pathEnv, '');
+	t.false(pathEnv.startsWith(path.delimiter));
+	t.is(pathEnv.endsWith(path.delimiter), shouldEndWithDelimiter);
+	t.is(pathEnv.includes(`${path.delimiter}${path.delimiter}`), hasTwoDelimiters);
+};
+
+test('the PATH can be empty', testEmptyPath, '', false, false);
+test('the PATH can be ; or :', testEmptyPath, path.delimiter, true, false);
+test('the PATH can start with ; or :', testEmptyPath, `${path.delimiter}foo`, false, true);
+test('the PATH can end with ; or :', testEmptyPath, `foo${path.delimiter}`, true, false);

@@ -22,7 +22,9 @@ export const npmRunPath = ({
 		applyExecPath(result, pathParts, execPath, cwdPath);
 	}
 
-	return [...result, pathOption].join(path.delimiter);
+	return pathOption === '' || pathOption === path.delimiter
+		? `${result.join(path.delimiter)}${pathOption}`
+		: [...result, pathOption].join(path.delimiter);
 };
 
 const applyPreferLocal = (result, pathParts, cwdPath) => {
