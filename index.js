@@ -12,27 +12,34 @@ export const npmRunPath = ({
 } = {}) => {
 	const cwdPath = path.resolve(toPath(cwd));
 	const result = [];
+	const pathParts = pathOption.split(path.delimiter);
 
 	if (preferLocal) {
-		applyPreferLocal(result, cwdPath);
+		applyPreferLocal(result, pathParts, cwdPath);
 	}
 
 	if (addExecPath) {
-		applyExecPath(result, execPath, cwdPath);
+		applyExecPath(result, pathParts, execPath, cwdPath);
 	}
 
 	return [...result, pathOption].join(path.delimiter);
 };
 
-const applyPreferLocal = (result, cwdPath) => {
+const applyPreferLocal = (result, pathParts, cwdPath) => {
 	for (const directory of traversePathUp(cwdPath)) {
-		result.push(path.join(directory, 'node_modules/.bin'));
+		const pathPart = path.join(directory, 'node_modules/.bin');
+		if (!pathParts.includes(pathPart)) {
+			result.push(pathPart);
+		}
 	}
 };
 
 // Ensure the running `node` binary is used
-const applyExecPath = (result, execPath, cwdPath) => {
-	result.push(path.resolve(cwdPath, toPath(execPath), '..'));
+const applyExecPath = (result, pathParts, execPath, cwdPath) => {
+	const pathPart = path.resolve(cwdPath, toPath(execPath), '..');
+	if (!pathParts.includes(pathPart)) {
+		result.push(pathPart);
+	}
 };
 
 export const npmRunPathEnv = ({env = process.env, ...options} = {}) => {

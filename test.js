@@ -4,11 +4,11 @@ import {fileURLToPath, pathToFileURL} from 'node:url';
 import test from 'ava';
 import {npmRunPath, npmRunPathEnv} from './index.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const localBinaryDirectory = fileURLToPath(new URL('node_modules/.bin', import.meta.url));
 
 const testLocalDirectory = (t, addExecPath, preferLocal, expectedResult) => {
 	t.is(
-		npmRunPath({path: '', addExecPath, preferLocal}).split(path.delimiter)[0] === path.join(__dirname, 'node_modules/.bin'),
+		npmRunPath({path: '', addExecPath, preferLocal}).split(path.delimiter)[0] === localBinaryDirectory,
 		expectedResult,
 	);
 };
@@ -20,7 +20,7 @@ test('"preferLocal: false", "addExecPath: false" does not add node_modules/.bin 
 
 const testLocalDirectoryEnv = (t, addExecPath, preferLocal, expectedResult) => {
 	t.is(
-		npmRunPathEnv({env: {PATH: 'foo'}, addExecPath, preferLocal}).PATH.split(path.delimiter)[0] === path.join(__dirname, 'node_modules/.bin'),
+		npmRunPathEnv({env: {PATH: 'foo'}, addExecPath, preferLocal}).PATH.split(path.delimiter)[0] === localBinaryDirectory,
 		expectedResult,
 	);
 };
@@ -29,6 +29,15 @@ test('Adds node_modules/.bin - npmRunPathEnv()', testLocalDirectoryEnv, undefine
 test('"addExecPath: false" still adds node_modules/.bin - npmRunPathEnv()', testLocalDirectoryEnv, false, undefined, true);
 test('"preferLocal: false" does not add node_modules/.bin - npmRunPathEnv()', testLocalDirectoryEnv, undefined, false, false);
 test('"preferLocal: false", "addExecPath: false" does not add node_modules/.bin - npmRunPathEnv()', testLocalDirectoryEnv, false, false, false);
+
+test('node_modules/.bin is not added twice', t => {
+	const firstPathEnv = npmRunPath({path: ''});
+	const pathEnv = npmRunPath({path: firstPathEnv});
+	const execPaths = pathEnv
+		.split(path.delimiter)
+		.filter(pathPart => pathPart === localBinaryDirectory);
+	t.is(execPaths.length, 1);
+});
 
 test('the `cwd` option changes the current directory', t => {
 	t.is(
@@ -47,6 +56,15 @@ test('the `cwd` option can be a file URL', t => {
 test('push `execPath` later in the PATH', t => {
 	const pathEnv = npmRunPath({path: ''}).split(path.delimiter);
 	t.is(pathEnv.at(-2), path.dirname(process.execPath));
+});
+
+test('`execPath` is not added twice', t => {
+	const firstPathEnv = npmRunPath({path: ''});
+	const pathEnv = npmRunPath({path: firstPathEnv});
+	const execPaths = pathEnv
+		.split(path.delimiter)
+		.filter(pathPart => pathPart === path.dirname(process.execPath));
+	t.is(execPaths.length, 1);
 });
 
 const testExecPath = (t, preferLocal, addExecPath, expectedResult) => {
