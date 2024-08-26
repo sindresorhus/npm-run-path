@@ -32,15 +32,15 @@ test('"preferLocal: false", "addExecPath: false" does not add node_modules/.bin 
 
 test('the `cwd` option changes the current directory', t => {
 	t.is(
-		npmRunPath({path: '', cwd: '/dir'}).split(path.delimiter)[0],
-		path.normalize('/dir/node_modules/.bin'),
+		npmRunPath({path: '', cwd: './dir'}).split(path.delimiter)[0],
+		path.resolve('./dir/node_modules/.bin'),
 	);
 });
 
 test('the `cwd` option can be a file URL', t => {
 	t.is(
-		npmRunPath({path: '', cwd: new URL('file:///dir')}).split(path.delimiter)[0],
-		path.normalize('/dir/node_modules/.bin'),
+		npmRunPath({path: '', cwd: new URL('dir', import.meta.url)}).split(path.delimiter)[0],
+		fileURLToPath(new URL('dir/node_modules/.bin', import.meta.url)),
 	);
 });
 
@@ -88,7 +88,7 @@ test('the `execPath` option is relative to the `cwd` option', t => {
 	const pathEnv = npmRunPath({
 		path: '',
 		execPath: 'test/test',
-		cwd: '/dir',
+		cwd: './dir',
 	}).split(path.delimiter);
-	t.is(pathEnv.at(-2), path.normalize('/dir/test'));
+	t.is(pathEnv.at(-2), path.resolve('./dir/test'));
 });
